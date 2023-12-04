@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     <div className="flex items-center w-full bg-[#fff]" style={{ justifyContent: 'space-between', paddingLeft: 46, paddingRight: 46 }}>
-      <div className="bg-[#E8486F] text-white font-bold" style={{ padding: 20 }}>
+      <div className="bg-[#E8486F] text-white font-bold" style={{ padding: 20, cursor: "pointer" }} onClick={() => router.push('/')}>
         <span> IMPACTHUB</span>
       </div>
       <div>
