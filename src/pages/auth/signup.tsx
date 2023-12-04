@@ -46,8 +46,8 @@ const Signup = () => {
         }
         console.log(response);
 
-      } catch (error) {
-        alert(error)
+      } catch (error: any) {
+        alert(error?.response?.data?.message)
         console.error('Error making POST request:', error);
       }
     }
