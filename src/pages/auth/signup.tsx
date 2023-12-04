@@ -23,7 +23,7 @@ const Signup = () => {
     const password = e.target.elements.password.value;
     const confirmPassword = e.target.elements['confirm-password'].value;
 
-    const passwordsValid = validatePasswords(password, confirmPassword);
+    const passwordsValid = validateForm(fullName, email, contactNumber, password, confirmPassword);
     console.log(passwordsValid, errors);
 
     if (passwordsValid) {
@@ -54,13 +54,38 @@ const Signup = () => {
 
   };
 
-  const validatePasswords = (password: string, confirmPassword: any) => {
+  const validateForm = (fullName: string, email: string, contactNumber: string, password: string, confirmPassword: any) => {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,14}$/;
 
     // Reset previous errors
     setErrors({});
 
-    // Validate Password
+    const fullNameRegex = /^[a-zA-Z\s]*$/;
+    if (!fullNameRegex.test(fullName)) {
+      setErrors((prevErrors: any) => ({
+        ...prevErrors,
+        fullName: 'Full Name should not have special characters or numbers.',
+      }));
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrors((prevErrors: any) => ({
+        ...prevErrors,
+        email: 'Please enter a valid email address.',
+      }));
+      return false;
+    }
+
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(contactNumber)) {
+      setErrors((prevErrors: any) => ({
+        ...prevErrors,
+        phoneNo: 'Please enter a valid phone number.',
+      }));
+      return false;
+    }
     if (!passwordPattern.test(password)) {
       setErrors((prevErrors: any) => ({
         ...prevErrors,
@@ -78,7 +103,6 @@ const Signup = () => {
       return false;
     }
 
-    // Passwords are valid
     return true;
   };
   const SuccessModal = () => {
@@ -166,6 +190,8 @@ const Signup = () => {
                   required
                   className="block w-full md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#E8486F] sm:text-sm sm:leading-6"
                 />
+                <p className='text-xs text-left text-red-400'>{errors.fullName}</p>
+
               </div>
             </div>
             <div>
@@ -179,6 +205,8 @@ const Signup = () => {
                   required
                   className="block w-full md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#E8486F] sm:text-sm sm:leading-6"
                 />
+                <p className='text-xs text-left text-red-400'>{errors.email}</p>
+
               </div>
             </div>
             <div>
@@ -192,6 +220,8 @@ const Signup = () => {
                   required
                   className="block w-full md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#E8486F] sm:text-sm sm:leading-6"
                 />
+                <p className='text-xs text-left text-red-400'>{errors.phoneNo}</p>
+
               </div>
             </div>
             <div>
